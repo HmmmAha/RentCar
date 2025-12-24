@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentCar.WebClient", "RentCar.WebClient\RentCar.WebClient.csproj", "{9DBCF638-359A-48AD-A481-F285A799393D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentCar.API", "RentCar.API\RentCar.API.csproj", "{3B56F64B-6989-4142-A14C-B974DC46973D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DBCF638-359A-48AD-A481-F285A799393D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DBCF638-359A-48AD-A481-F285A799393D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DBCF638-359A-48AD-A481-F285A799393D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DBCF638-359A-48AD-A481-F285A799393D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B56F64B-6989-4142-A14C-B974DC46973D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B56F64B-6989-4142-A14C-B974DC46973D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B56F64B-6989-4142-A14C-B974DC46973D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B56F64B-6989-4142-A14C-B974DC46973D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F61FDCE5-5866-4D99-960B-BAB0D4B96AB2}
+	EndGlobalSection
+EndGlobal

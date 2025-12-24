@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="auth-section">
+    @{
+        var username = Context.Session.GetString("Email");
+    }
+    @if (!string.IsNullOrEmpty(username))
+    {
+        <div class="user-info">
+            <span class="user-name">Hello, @username</span>
+            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
+                <button type="submit" class="btn-logout">Sign Out</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="auth-buttons">
+            <a asp-area="" asp-controller="Account" asp-action="Login" class="btn-login">Login</a>
+            <a asp-area="" asp-controller="Account" asp-action="Register" class="btn-register">Sign Up</a>
+        </div>
+    }
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

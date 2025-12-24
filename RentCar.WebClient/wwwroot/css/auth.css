@@ -1,0 +1,103 @@
+﻿body {
+    background: #f4f6f8;
+    font-family: Arial, sans-serif;
+}
+
+.auth-box {
+    width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+}
+
+    .auth-box input {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .auth-box button {
+        width: 100%;
+        margin-top: 20px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+/* Authentication section styles */
+.auth-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 15px 30px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-name {
+    color: #333;
+    font-weight: 500;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+.btn-logout {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+    .btn-logout:hover {
+        background: #b91c1c;
+    }
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-login,
+.btn-register {
+    padding: 8px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-login {
+    background: #f3f4f6;
+    color: #333;
+}
+
+    .btn-login:hover {
+        background: #e5e7eb;
+    }
+
+.btn-register {
+    background: #2563eb;
+    color: white;
+}
+
+    .btn-register:hover {
+        background: #1d4ed8;
+    }
