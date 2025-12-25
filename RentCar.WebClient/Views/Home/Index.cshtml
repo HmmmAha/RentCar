@@ -1,30 +1,127 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model RentCar.WebClient.Models.Cars.CarsViewModel
+@{
+    ViewData["Title"] = "Available Cars";
 }
 
-<div class="auth-section">
-    @{
-        var username = Context.Session.GetString("Email");
-    }
-    @if (!string.IsNullOrEmpty(username))
+
+
+
+
+<link rel="stylesheet" href="~/css/cars.css" />
+
+
+
+<div class="cars-container">
+    <h1 class="page-title">Sewa Mobil</h1>
+
+    <!-- Sorting Options -->
+    <div class="controls-bar">
+        <div class="sorting-controls">
+            <div class="sort-dropdown">
+                <button class="sort-button" onclick="toggleDropdown()">
+                    Sort By: @Model.SortBy ▼
+                </button>
+                <div class="dropdown-menu" id="sortDropdown">
+                    <a href="@Url.Action("Index", new { sortBy = "Name", sortOrder = Model.SortOrder, page = 1 })">Name</a>
+                    <a href="@Url.Action("Index", new { sortBy = "Model", sortOrder = Model.SortOrder, page = 1 })">Model</a>
+                    <a href="@Url.Action("Index", new { sortBy = "Year", sortOrder = Model.SortOrder, page = 1 })">Year</a>
+                    <a href="@Url.Action("Index", new { sortBy = "Price", sortOrder = Model.SortOrder, page = 1 })">Price</a>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", new { sortBy = Model.SortBy, sortOrder = Model.SortOrder == "asc" ? "desc" : "asc", page = Model.CurrentPage })"
+               class="sort-order-button">
+                @if (Model.SortOrder == "asc")
+                {
+                    <span>↑ Ascending</span>
+                }
+                else
+                {
+                    <span>↓ Descending</span>
+                }
+            </a>
+        </div>
+        <div class="results-info">
+            <p>Showing @((Model.CurrentPage - 1) * 3 + 1) - @Math.Min(Model.CurrentPage * 3, Model.TotalCars) of @Model.TotalCars cars</p>
+        </div>
+    </div>
+
+    <!-- Car Cards Grid -->
+    <div class="cars-grid">
+        @foreach (var car in Model.Cars)
+        {
+            <a href="@Url.Action("Details", "Cars", new { id = car.Car_id })" class="car-card-link">
+                <div class="car-card">
+                    <div class="car-image">
+                        @if (car.CarImages != null && car.CarImages.Any())
+                        {
+                            <img src="@car.CarImages.First().Image_link" alt="@car.Name">
+                        }
+                        else
+                        {
+                            <img src="/images/placeholder-car.jpg" alt="No image">
+                        }
+                    </div>
+                    <div class="car-info">
+                        <h3 class="car-name">@car.Name @car.Year</h3>
+                        <div class="car-price">
+                            <span class="price-label">Harga</span>
+                            <span class="price-amount">Rp. @car.Price_per_day.ToString("N0") / hari</span>
+                        </div>
+                        <div class="details-button">Lihat Selengkapnya</div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+
+    @if (Model.TotalCars == 0)
     {
-        <div class="user-info">
-            <span class="user-name">Hello, @username</span>
-            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
-                <button type="submit" class="btn-logout">Sign Out</button>
-            </form>
+        <div class="no-results">
+            <p>No available cars at the moment. Please check back later.</p>
         </div>
     }
-    else
+
+    <!-- Pagination -->
+    @if (Model.TotalPages > 1)
     {
-        <div class="auth-buttons">
-            <a asp-area="" asp-controller="Account" asp-action="Login" class="btn-login">Login</a>
-            <a asp-area="" asp-controller="Account" asp-action="Register" class="btn-register">Sign Up</a>
-        </div>
+        <nav class="pagination">
+            <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1, sortBy = Model.SortBy, sortOrder = Model.SortOrder })"
+               class="page-link @(!Model.HasPreviousPage ? "disabled" : "")">
+                Previous
+            </a>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <a href="@Url.Action("Index", new { page = i, sortBy = Model.SortBy, sortOrder = Model.SortOrder })"
+                   class="page-link @(i == Model.CurrentPage ? "active" : "")">
+                    @i
+                </a>
+            }
+
+            <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1, sortBy = Model.SortBy, sortOrder = Model.SortOrder })"
+               class="page-link @(!Model.HasNextPage ? "disabled" : "")">
+                Next
+            </a>
+        </nav>
     }
 </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<script>
+    function toggleDropdown() {
+        document.getElementById('sortDropdown').classList.toggle('show');
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.sort-button')) {
+            var dropdowns = document.getElementsByClassName('dropdown-menu');
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+

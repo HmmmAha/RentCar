@@ -1,0 +1,228 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f4f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.details-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.back-link {
+    margin-bottom: 20px;
+}
+
+    .back-link a {
+        color: #3498db;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }
+
+        .back-link a:hover {
+            color: #2980b9;
+        }
+
+.page-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.details-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+/* Image Carousel Section */
+.image-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+    .carousel-image.active {
+        opacity: 1;
+        position: relative;
+    }
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.3s ease;
+    z-index: 10;
+}
+
+    .carousel-btn:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .carousel-btn.prev {
+        left: 10px;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .carousel-btn.next {
+        right: 10px;
+        border-radius: 8px 0 0 8px;
+    }
+
+/* Information Section */
+.info-section {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.info-card {
+    padding: 30px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+    .info-table tr {
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+        .info-table tr:last-child {
+            border-bottom: none;
+        }
+
+    .info-table td {
+        padding: 15px 10px;
+    }
+
+    .info-table .label {
+        font-weight: 600;
+        color: #2c3e50;
+        width: 45%;
+    }
+
+    .info-table .value {
+        color: #555;
+    }
+
+    .info-table .price-row {
+        background: #f8f9fa;
+    }
+
+        .info-table .price-row .label {
+            font-size: 1.1rem;
+        }
+
+        .info-table .price-row .value.price {
+            font-size: 1.5rem;
+            color: #3498db;
+            font-weight: 700;
+        }
+
+.rent-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ffc371 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+}
+
+    .rent-button:hover {
+        background: linear-gradient(135deg, #ff5a8a 0%, #ffb35e 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(255, 107, 157, 0.4);
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .carousel-inner {
+        height: 300px;
+    }
+
+    .carousel-btn {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .info-card {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .info-table .label,
+    .info-table .value {
+        display: block;
+        width: 100%;
+    }
+
+    .info-table .label {
+        padding-bottom: 5px;
+        font-size: 0.9rem;
+    }
+
+    .info-table .value {
+        padding-top: 0;
+        padding-bottom: 15px;
+    }
+}

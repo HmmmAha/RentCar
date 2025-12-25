@@ -22,11 +22,10 @@ namespace RentCar.WebClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var response = await _http.PostAsJsonAsync("login", model);
+            var response = await _http.PostAsJsonAsync("api/Auth/login", model);
 
             if (!response.IsSuccessStatusCode)
             {
-                
                 ViewBag.Error = "Login failed";
                 return View();
             }
@@ -43,7 +42,7 @@ namespace RentCar.WebClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var response = await _http.PostAsJsonAsync("register", model);
+            var response = await _http.PostAsJsonAsync("api/Auth/register", model);
 
             if (!response.IsSuccessStatusCode)
             {

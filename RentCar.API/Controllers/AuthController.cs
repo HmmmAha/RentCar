@@ -3,7 +3,6 @@ using RentCar.API.Data;
 using RentCar.API.Models;
 using RentCar.API.DTOs.Auth;
 using Microsoft.EntityFrameworkCore;
-using BCrypt.Net;
 
 namespace RentCar.API.Controllers
 {
@@ -17,7 +16,7 @@ namespace RentCar.API.Controllers
         }
 
 
-        [HttpPost("register")]
+        [HttpPost("api/Auth/register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             if (!ModelState.IsValid)
@@ -39,7 +38,7 @@ namespace RentCar.API.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 Name = dto.Name,
                 Phone_number = dto.Phone_number,
-                Address = dto.Email,
+                Address = dto.Address,
                 Driver_license_number = dto.Driver_license_number
             };
 
@@ -52,8 +51,8 @@ namespace RentCar.API.Controllers
             });
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        [HttpPost("api/Auth/login")]
+        public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -78,12 +77,19 @@ namespace RentCar.API.Controllers
             if (!passwordValid)
                 return Unauthorized("Invalid email or password");
 
-            return Ok(new
+            return Ok(new LoginResponse
             {
-                user.Customer_id,
-                user.Name,
-                user.Email
+                Customer_id = user.Customer_id,
+                Name = user.Name,
+                Email = user.Email
             });
         }
+    }
+
+    public class LoginResponse
+    {
+        public string Customer_id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
     }
 }

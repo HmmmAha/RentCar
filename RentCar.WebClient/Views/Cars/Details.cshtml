@@ -1,0 +1,107 @@
+﻿@model RentCar.WebClient.Models.Cars.CarDto
+@{
+    ViewData["Title"] = "Car Details";
+}
+
+
+
+<link rel="stylesheet" href="~/css/car-details.css">
+
+<div class="details-container">
+    <div class="back-link">
+        <a href="@Url.Action("Index", "Home")">← Back to Cars</a>
+    </div>
+
+    <h1 class="page-title">Sewa Mobil</h1>
+
+    <div class="details-content">
+        <!-- Image Carousel -->
+        <div class="image-section">
+            <div class="carousel">
+                @if (Model.CarImages != null && Model.CarImages.Any())
+                {
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < Model.CarImages.Count; i++)
+                        {
+                            <img src="@Model.CarImages[i].Image_link"
+                                 alt="@Model.Name @(i+1)"
+                                 class="carousel-image @(i == 0 ? "active" : "")"
+                                 id="image-@i">
+                        }
+                    </div>
+
+                    @if (Model.CarImages.Count > 1)
+                    {
+                        <button class="carousel-btn prev" onclick="changeImage(-1)">‹ Prev</button>
+                        <button class="carousel-btn next" onclick="changeImage(1)">Next ›</button>
+                    }
+                }
+                else
+                {
+                    <img src="/images/placeholder-car.jpg" alt="No image" class="carousel-image active">
+                }
+            </div>
+        </div>
+
+        <!-- Car Information -->
+        <div class="info-section">
+            <div class="info-card">
+                <h2 class="section-title">Informasi Mobil</h2>
+
+                <table class="info-table">
+                    <tr>
+                        <td class="label">Tipe Mobil</td>
+                        <td class="value">@Model.Model</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Nama Mobil</td>
+                        <td class="value">@Model.Name @Model.Year</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Transmisi</td>
+                        <td class="value">@Model.Transmission</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Jumlah Penumpang</td>
+                        <td class="value">@Model.Number_of_car_seats Penumpang</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Plat Nomor</td>
+                        <td class="value">@Model.License_plate</td>
+                    </tr>
+                    <tr class="price-row">
+                        <td class="label">Harga Sewa</td>
+                        <td class="value price">Rp. @Model.Price_per_day.ToString("N0") / hari</td>
+                    </tr>
+                </table>
+
+                <button class="rent-button" onclick="window.location.href='@Url.Action("Rent", new { id = Model.Car_id })'">
+                    Sewa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentImageIndex = 0;
+    const totalImages = @(Model.CarImages?.Count ?? 0);
+
+    function changeImage(direction) {
+        const images = document.querySelectorAll('.carousel-image');
+        images[currentImageIndex].classList.remove('active');
+
+        currentImageIndex += direction;
+
+        if (currentImageIndex >= totalImages) {
+            currentImageIndex = 0;
+        } else if (currentImageIndex < 0) {
+            currentImageIndex = totalImages - 1;
+        }
+
+        images[currentImageIndex].classList.add('active');
+    }
+
+    // Optional: Auto-advance carousel every 5 seconds
+    setInterval(() => changeImage(1), 5000);
+</script>
