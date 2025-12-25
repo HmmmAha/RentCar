@@ -253,6 +253,20 @@ body {
         pointer-events: none;
     }
 
+
+.date-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 16px;
+}
+
+    .date-controls label {
+        font-weight: 600;
+    }
+
+    
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .page-title {

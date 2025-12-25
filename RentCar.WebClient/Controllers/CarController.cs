@@ -5,24 +5,27 @@ using System.Text.Json;
 
 namespace RentCar.WebClient.Controllers
 {
-    public class CarsController : Controller
+    public class CarController : Controller
     {
         private readonly HttpClient _http;
 
-        public CarsController(IHttpClientFactory factory)
+        public CarController(IHttpClientFactory factory)
         {
             _http = factory.CreateClient();
             _http.BaseAddress = new Uri("https://localhost:7261/");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(
+            string id,
+            DateTime? rentDate,
+            DateTime? returnDate
+        )
         {
-            Console.WriteLine("id: ", id);
             try
             {
 
-                var response = await _http.GetAsync($"api/Cars/{id}");
+                var response = await _http.GetAsync($"api/Car/{id}");
                 Console.WriteLine("done fetching:", response);
                 if (response.IsSuccessStatusCode)
                 {
@@ -33,11 +36,13 @@ namespace RentCar.WebClient.Controllers
                         PropertyNameCaseInsensitive = true
                     });
 
+                    ViewBag.RentDate = rentDate;
+                    ViewBag.ReturnDate = returnDate;
+
                     return View(car);
                 }
                 else
                 {
-                    Console.WriteLine("not success");
                     return NotFound();
                 }
             }

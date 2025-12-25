@@ -7,23 +7,23 @@ namespace RentCar.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomerController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CustomersController(ApplicationDbContext context)
+        public CustomerController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customers
+        // GET: api/Customer
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MsCustomer>>> GetCustomers()
         {
             return await _context.MsCustomers.ToListAsync();
         }
 
-        // GET: api/Customers/5
+        // GET: api/Customer
         [HttpGet("{id}")]
         public async Task<ActionResult<MsCustomer>> GetCustomer(string id)
         {
@@ -39,7 +39,7 @@ namespace RentCar.API.Controllers
             return customer;
         }
 
-        // POST: api/Customers
+        // POST: api/Customer
         [HttpPost]
         public async Task<ActionResult<MsCustomer>> PostCustomer(MsCustomer customer)
         {
@@ -49,7 +49,7 @@ namespace RentCar.API.Controllers
             return CreatedAtAction(nameof(GetCustomer), new { id = customer.Customer_id }, customer);
         }
 
-        // PUT: api/Customers/5
+        // PUT: api/Customer/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(string id, MsCustomer customer)
         {
@@ -79,7 +79,7 @@ namespace RentCar.API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/Customer/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(string id)
         {

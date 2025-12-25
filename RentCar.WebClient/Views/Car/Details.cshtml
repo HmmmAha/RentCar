@@ -66,6 +66,10 @@
                         <td class="value">@Model.Number_of_car_seats Penumpang</td>
                     </tr>
                     <tr>
+                        <td class="label">Tanggal Sewa</td>
+                        <td class="value">@(((DateTime)ViewBag.RentDate).ToString("dd MMM yyyy")) sampai dengan @(((DateTime)ViewBag.ReturnDate).ToString("dd MMM yyyy"))</td>
+                    </tr>
+                    <tr>
                         <td class="label">Plat Nomor</td>
                         <td class="value">@Model.License_plate</td>
                     </tr>
@@ -75,9 +79,12 @@
                     </tr>
                 </table>
 
-                <button class="rent-button" onclick="window.location.href='@Url.Action("Rent", new { id = Model.Car_id })'">
-                    Sewa
-                </button>
+                <form asp-controller="Cart" asp-action="Add" method="post">
+                    <input type="hidden" name="Car_id" value="@Model.Car_id" />
+                    <input type="hidden" name="Rental_date" value="@ViewBag.RentDate" />
+                    <input type="hidden" name="Return_date" value="@ViewBag.ReturnDate" />
+                    <button type="submit" class="rent-button">Sewa</button>
+                </form>
             </div>
         </div>
     </div>

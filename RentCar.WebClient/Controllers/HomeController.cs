@@ -28,7 +28,7 @@ namespace RentCar.WebClient.Controllers
             try
             {
                 var response = await _http.GetAsync(
-                    $"/api/Cars?page={page}&sortBy={sortBy}&sortOrder={sortOrder}");
+                    $"/api/Car?page={page}&sortBy={sortBy}&sortOrder={sortOrder}");
 
                 if (!response.IsSuccessStatusCode)
                 {

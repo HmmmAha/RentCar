@@ -8,16 +8,16 @@ namespace RentCar.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarsController : ControllerBase
+    public class CarController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CarsController(ApplicationDbContext context)
+        public CarController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Cars?page=1&sortBy=Name&sortOrder=asc
+        // GET: api/Cars?page={page}&sortBy={sortBy}&sortOrder={sortOrder}
         [HttpGet]
         public async Task<ActionResult<CarAPIResponse>> GetAvailableCars(
             [FromQuery] int page = 1,
@@ -83,6 +83,8 @@ namespace RentCar.API.Controllers
                     PageSize = pageSize
                 };
 
+                Console.WriteLine("response: ", response);
+
                 return Ok(response);
             }
             catch (Exception ex)
@@ -91,7 +93,7 @@ namespace RentCar.API.Controllers
             }
         }
 
-        // GET: api/Cars/{id}
+        // GET: api/Car/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<CarDto>> GetCar(string id)
         {

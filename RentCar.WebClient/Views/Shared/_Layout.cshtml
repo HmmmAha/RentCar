@@ -13,7 +13,7 @@
     <header>
         <div class="auth-section">
             @{
-                var username = Context.Session.GetString("Email");
+                var username = Context.Session.GetString("Name");
             }
             @if (!string.IsNullOrEmpty(username))
             {

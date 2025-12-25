@@ -1,0 +1,175 @@
+﻿@model RentCar.WebClient.Models.Cart.CartResponseDto
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+
+<link rel="stylesheet" href="~/css/cart.css">
+
+<div class="cart-container">
+    <h1 class="page-title">Keranjang Sewa</h1>
+
+    @if (Model.TotalItems == 0)
+    {
+        <div class="empty-cart">
+            <div class="empty-icon">🛒</div>
+            <h2>Keranjang Anda Kosong</h2>
+            <p>Belum ada sewa yang belum dibayar</p>
+            <a href="@Url.Action("Index", "Home")" class="browse-button">Lihat Mobil</a>
+        </div>
+    }
+    else
+    {
+        <div class="cart-info">
+            <p>📌 Total @Model.TotalItems sewa yang belum dibayar. Anda harus membayar satu per satu.</p>
+        </div>
+
+        <div class="cart-items">
+            @foreach (var item in Model.Items)
+            {
+                <div class="cart-item" data-rental-id="@item.Rental_id">
+                    <div class="item-details">
+                        <h3 class="item-name">@item.Car_name @item.Car_year</h3>
+                        <p class="item-model">@item.Car_model</p>
+
+                        <div class="rental-info">
+                            <div class="info-row">
+                                <span class="label">📅 Tanggal Sewa:</span>
+                                <span class="value">@item.Rental_date.ToString("dd MMM yyyy")</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">📅 Tanggal Kembali:</span>
+                                <span class="value">@item.Return_date.ToString("dd MMM yyyy")</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">⏱️ Durasi:</span>
+                                <span class="value">@item.Rental_days hari</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">💰 Harga per hari:</span>
+                                <span class="value">Rp. @item.Price_per_day.ToString("N0")</span>
+                            </div>
+                            <div class="info-row status-row">
+                                <span class="label">💳 Status:</span>
+                                <span class="value status-unpaid">Belum Dibayar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="total-price">
+                            <span class="label">Total Harga</span>
+                            <span class="price">Rp. @item.Total_price.ToString("N0")</span>
+                        </div>
+                        <button class="checkout-button" onclick="showPaymentModal('@item.Rental_id', '@item.Car_name', @item.Total_price)">
+                            Bayar Sekarang
+                        </button>
+                        <button class="remove-button" onclick="removeItem('@item.Rental_id')">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <h2>Konfirmasi Pembayaran</h2>
+        <div id="paymentDetails"></div>
+
+        <div class="payment-method">
+            <label for="paymentMethod">Metode Pembayaran:</label>
+            <select id="paymentMethod">
+                <option value="Credit Card">Kartu Kredit</option>
+                <option value="Debit Card">Kartu Debit</option>
+                <option value="Bank Transfer">Transfer Bank</option>
+                <option value="E-Wallet">E-Wallet</option>
+                <option value="Cash">Tunai</option>
+            </select>
+        </div>
+
+        <div class="modal-actions">
+            <button class="confirm-button" onclick="confirmPayment()">Konfirmasi Pembayaran</button>
+            <button class="cancel-button" onclick="closePaymentModal()">Batal</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentRentalId = '';
+
+    function showPaymentModal(rentalId, carName, totalPrice) {
+        currentRentalId = rentalId;
+        document.getElementById('paymentDetails').innerHTML = `
+            <p><strong>Mobil:</strong> ${carName}</p>
+            <p><strong>Total:</strong> Rp. ${totalPrice.toLocaleString('id-ID')}</p>
+        `;
+        document.getElementById('paymentModal').style.display = 'block';
+    }
+
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+        currentRentalId = '';
+    }
+
+    async function confirmPayment() {
+        const paymentMethod = document.getElementById('paymentMethod').value;
+
+        try {
+            const response = await fetch('@Url.Action("Pay", "Cart")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Rental_id: currentRentalId,
+                    Payment_method: paymentMethod
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('✅ ' + result.message);
+                location.reload();
+            } else {
+                alert('❌ ' + result.message);
+            }
+        } catch (error) {
+            alert('❌ Error: ' + error.message);
+        }
+    }
+
+    async function removeItem(rentalId) {
+        if (!confirm('Hapus sewa ini dari keranjang?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`@Url.Action("Remove", "Cart")/${rentalId}`, {
+                method: 'POST'
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert('❌ ' + result.message);
+            }
+        } catch (error) {
+            alert('❌ Error: ' + error.message);
+        }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('paymentModal');
+        if (event.target == modal) {
+            closePaymentModal();
+        }
+    }
+</script>

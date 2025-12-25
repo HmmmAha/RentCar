@@ -30,8 +30,14 @@ namespace RentCar.WebClient.Controllers
                 return View();
             }
 
+            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
 
-            HttpContext.Session.SetString("Email", model.Email);
+
+            HttpContext.Session.SetString("Email", loginResponse.Email);
+            HttpContext.Session.SetString("CustomerId", loginResponse.Customer_id);
+            HttpContext.Session.SetString("Name", loginResponse.Name);
+
+
             Console.WriteLine("returning");
             return RedirectToAction("Index", "Home");
         }
@@ -59,5 +65,6 @@ namespace RentCar.WebClient.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
+        
     }
 }

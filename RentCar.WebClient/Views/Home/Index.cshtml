@@ -41,6 +41,35 @@
                 }
             </a>
         </div>
+
+        <!-- Rent / Return Date Inputs -->
+        @* <div class="date-controls">
+            <label for="rentDate">Rent:</label>
+            <input id="rentDate" type="date" />
+            <label for="returnDate">Return:</label>
+            <input id="returnDate" type="date" />
+        </div> *@
+
+        <form method="get" id="dateForm">
+            <label>
+                Rent Date:
+                <input type="date"
+                       name="rentDate"
+                       value="@Context.Request.Query["rentDate"]"
+                       onchange="this.form.submit()"
+                       required />
+            </label>
+
+            <label>
+                Return Date:
+                <input type="date"
+                       name="returnDate"
+                       value="@Context.Request.Query["returnDate"]"
+                       onchange="this.form.submit()"
+                       required />
+            </label>
+        </form>
+
         <div class="results-info">
             <p>Showing @((Model.CurrentPage - 1) * 3 + 1) - @Math.Min(Model.CurrentPage * 3, Model.TotalCars) of @Model.TotalCars cars</p>
         </div>
@@ -50,7 +79,15 @@
     <div class="cars-grid">
         @foreach (var car in Model.Cars)
         {
-            <a href="@Url.Action("Details", "Cars", new { id = car.Car_id })" class="car-card-link">
+            <a href="@Url.Action(
+                "Details", 
+                "Car", 
+                new {
+                    id = car.Car_id,
+                    rentDate = Context.Request.Query["rentDate"],
+                    returnDate = Context.Request.Query["returnDate"]
+                })" 
+                class="car-card-link">
                 <div class="car-card">
                     <div class="car-image">
                         @if (car.CarImages != null && car.CarImages.Any())
