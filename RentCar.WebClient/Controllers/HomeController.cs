@@ -20,15 +20,42 @@ namespace RentCar.WebClient.Controllers
 
         [HttpGet]
         public async Task<ActionResult<CarsViewModel>> Index(
+             DateTime? rentDate,
+             DateTime? returnDate,
              int page = 1,
              string sortBy = "Name",
              string sortOrder = "asc")
         {
+            if (!rentDate.HasValue || !returnDate.HasValue)
+            {
+                return View(new CarsViewModel
+                {
+                    Cars = new List<CarDto>(),
+                    TotalCars = 0,
+                    CurrentPage = page,
+                    SortBy = sortBy,
+                    SortOrder = sortOrder,
+                    CarValidation = CarValidationStatus.MissingDates
+                });
+            }
+
+            if (rentDate >= returnDate)
+            {
+                return View(new CarsViewModel
+                {
+                    Cars = new List<CarDto>(),
+                    TotalCars = 0,
+                    CurrentPage = page,
+                    SortBy = sortBy,
+                    SortOrder = sortOrder,
+                    CarValidation = CarValidationStatus.InvalidDateRange
+                });
+            }
             const int pageSize = 3;
             try
             {
                 var response = await _http.GetAsync(
-                    $"/api/Car?page={page}&sortBy={sortBy}&sortOrder={sortOrder}");
+                    $"/api/Car?rentDate={rentDate}&returnDate={returnDate}&page={page}&sortBy={sortBy}&sortOrder={sortOrder}");
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -48,7 +75,7 @@ namespace RentCar.WebClient.Controllers
                     TotalPages = apiResponse?.TotalPages ?? 0,
                     TotalCars = apiResponse?.TotalCars ?? 0,
                     SortBy = sortBy,
-                    SortOrder = sortOrder
+                    SortOrder = sortOrder,
                 };
 
                 return View(viewModel);

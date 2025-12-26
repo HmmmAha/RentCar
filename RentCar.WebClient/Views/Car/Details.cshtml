@@ -3,13 +3,31 @@
     ViewData["Title"] = "Car Details";
 }
 
+@{
+    DateTime? rentDate = string.IsNullOrEmpty(Context.Request.Query["rentDate"])
+        ? null
+        : DateTime.Parse(Context.Request.Query["rentDate"]);
 
+    DateTime? returnDate = string.IsNullOrEmpty(Context.Request.Query["returnDate"])
+        ? null
+        : DateTime.Parse(Context.Request.Query["returnDate"]);
+
+    int rentalDays = 0;
+
+    if (rentDate.HasValue && returnDate.HasValue)
+    {
+        rentalDays = (returnDate.Value - rentDate.Value).Days;
+    }
+}
 
 <link rel="stylesheet" href="~/css/car-details.css">
 
 <div class="details-container">
     <div class="back-link">
-        <a href="@Url.Action("Index", "Home")">← Back to Cars</a>
+        <a href="@Url.Action("Index", "Home", new { 
+            rentDate = Context.Request.Query["rentDate"],
+            returnDate = Context.Request.Query["returnDate"]
+        })">← Back to Cars</a>
     </div>
 
     <h1 class="page-title">Sewa Mobil</h1>
@@ -66,16 +84,24 @@
                         <td class="value">@Model.Number_of_car_seats Penumpang</td>
                     </tr>
                     <tr>
+                        <td class="label">Nama Penyewa</td>
+                        <td class="value">@User.FindFirst(ClaimTypes.Name)?.Value (@User.FindFirst(ClaimTypes.Email)?.Value)</td>
+                    </tr>
+                    <tr>
                         <td class="label">Tanggal Sewa</td>
-                        <td class="value">@(((DateTime)ViewBag.RentDate).ToString("dd MMM yyyy")) sampai dengan @(((DateTime)ViewBag.ReturnDate).ToString("dd MMM yyyy"))</td>
+                        <td class="value">@(rentDate?.ToString("dd MMM yyyy") ?? "-") sampai dengan @(returnDate?.ToString("dd MMM yyyy") ?? "-")</td>
                     </tr>
                     <tr>
                         <td class="label">Plat Nomor</td>
                         <td class="value">@Model.License_plate</td>
                     </tr>
-                    <tr class="price-row">
+                    <tr>
                         <td class="label">Harga Sewa</td>
                         <td class="value price">Rp. @Model.Price_per_day.ToString("N0") / hari</td>
+                    </tr>
+                    <tr class="price-row">
+                        <td class="label">Total Harga</td>
+                        <td class="value price">Rp. @(@Model.Price_per_day * rentalDays)</td>
                     </tr>
                 </table>
 

@@ -17,21 +17,45 @@ namespace RentCar.API.Controllers
             _context = context;
         }
 
-        // GET: api/Cars?page={page}&sortBy={sortBy}&sortOrder={sortOrder}
+        // GET: api/Cars?rentDate={rentDate}&returnDate={returnDate}&page={page}&sortBy={sortBy}&sortOrder={sortOrder}
         [HttpGet]
         public async Task<ActionResult<CarAPIResponse>> GetAvailableCars(
+            [FromQuery] DateTime? rentDate,
+            [FromQuery] DateTime? returnDate,
             [FromQuery] int page = 1,
             [FromQuery] string sortBy = "Name",
             [FromQuery] string sortOrder = "asc")
         {
             const int pageSize = 3;
 
+            // Return no cars if rent dates
+            if (!rentDate.HasValue || !returnDate.HasValue || rentDate >= returnDate)
+            {
+                return Ok(new CarAPIResponse
+                {
+                    Cars = new List<CarDto>(),
+                    CurrentPage = page,
+                    TotalPages = 0,
+                    TotalCars = 0,
+                    PageSize = pageSize
+                });
+            }
+
             try
             {
-                // Get available cars with their images
+
+
+                // Get available cars within a range of dates with their images
                 var query = _context.MsCars
                     .Include(c => c.CarImages)
-                    .Where(c => c.Status == true);
+                    .Include(c => c.Rentals)
+                    .Where(c => c.Status == true)
+                    .Where(c =>
+                        !c.Rentals.Any(r =>
+                            rentDate.Value < r.Return_date &&
+                            returnDate.Value > r.Rental_date
+                        )
+                    );
 
                 // Apply sorting
                 query = sortBy switch

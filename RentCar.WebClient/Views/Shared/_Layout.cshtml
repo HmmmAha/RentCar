@@ -8,12 +8,30 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RentCar.WebClient.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/auth.css" />
+    <link rel="stylesheet" href="~/css/burger.css" />
 </head>
 <body>
     <header>
+        <!-- Hamburger Menu -->
+    
         <div class="auth-section">
+            <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+
+            <div class="side-menu" id="sideMenu">
+                <div class="side-menu-header">
+                    <span class="menu-title">Menu</span>
+                    <button class="close-btn" onclick="toggleMenu()">✕</button>
+                </div>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+                <a href="@Url.Action("Index", "History")">Riwayat Penyewaan</a>
+                <a href="@Url.Action("About", "Home")">Tentang Kami</a>
+            </div>
+
+            <div style="flex: 1"></div>
+
+            <div class="side-menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
             @{
-                var username = Context.Session.GetString("Name");
+                var username = User.FindFirst(ClaimTypes.Name)?.Value;  
             }
             @if (!string.IsNullOrEmpty(username))
             {
@@ -39,14 +57,26 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - RentCar.WebClient - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    function toggleMenu() {
+        document.getElementById("sideMenu").classList.toggle("show");
+        document.getElementById("menuOverlay").classList.toggle("show");
+    }
+
+    window.addEventListener("click", function (e) {
+        const menu = document.getElementById("hamburgerMenu");
+        const button = document.querySelector(".hamburger-btn");
+
+        if (!menu.contains(e.target) && !button.contains(e.target)) {
+            menu.classList.remove("show");
+        }
+    });
+
+</script>

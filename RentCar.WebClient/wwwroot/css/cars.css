@@ -253,6 +253,31 @@ body {
         pointer-events: none;
     }
 
+.cart-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+    .cart-btn:hover {
+        background: #2980b9;
+    }
+
+.cart-btn-disabled {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #AFCDDB;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
 
 .date-controls {
     display: flex;
@@ -265,7 +290,7 @@ body {
         font-weight: 600;
     }
 
-    
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

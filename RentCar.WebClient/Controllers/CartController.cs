@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentCar.WebClient.Models;
+using RentCar.WebClient.Models.Cart;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
-
-using RentCar.WebClient.Models.Cart;
 
 namespace RentCar.WebClient.Controllers
 {
@@ -23,8 +23,8 @@ namespace RentCar.WebClient.Controllers
         {
             try
             {
-                // Get customer ID from session
-                var customerId = HttpContext.Session.GetString("CustomerId");
+                // Get customer ID from cookie
+                var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 if (string.IsNullOrEmpty(customerId))
                 {
@@ -64,7 +64,7 @@ namespace RentCar.WebClient.Controllers
             Console.WriteLine("hahaha");
             try
             {
-                var customerId = HttpContext.Session.GetString("CustomerId");
+                var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (string.IsNullOrEmpty(customerId))
                 {
                     return Json(new { success = false, message = "Please login first" });
@@ -132,7 +132,7 @@ namespace RentCar.WebClient.Controllers
         {
             try
             {
-                var customerId = HttpContext.Session.GetString("CustomerId");
+                var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (string.IsNullOrEmpty(customerId))
                 {
                     return Json(new { success = false, message = "Please login first" });
