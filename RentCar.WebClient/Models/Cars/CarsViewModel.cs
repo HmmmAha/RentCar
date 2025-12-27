@@ -15,7 +15,7 @@ namespace RentCar.WebClient.Models.Cars
 
         // default to valid to avoid accidental invalid states
         public CarValidationStatus CarValidation { get; set; } = CarValidationStatus.Valid;
-
+        public int? YearFilter { get; set; }
 
         public bool HasPreviousPage => CurrentPage > 1;
         public bool HasNextPage => CurrentPage < TotalPages;

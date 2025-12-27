@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentCar.WebClient.Models;
 using RentCar.WebClient.Models.Cars;
+using System;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -22,6 +23,7 @@ namespace RentCar.WebClient.Controllers
         public async Task<ActionResult<CarsViewModel>> Index(
              DateTime? rentDate,
              DateTime? returnDate,
+             int? yearFilter,
              int page = 1,
              string sortBy = "Name",
              string sortOrder = "asc")
@@ -54,9 +56,16 @@ namespace RentCar.WebClient.Controllers
             const int pageSize = 3;
             try
             {
-                var response = await _http.GetAsync(
-                    $"/api/Car?rentDate={rentDate}&returnDate={returnDate}&page={page}&sortBy={sortBy}&sortOrder={sortOrder}");
+                var url = $"/api/Car?rentDate={rentDate}&returnDate={returnDate}&page={page}&sortBy={sortBy}&sortOrder={sortOrder}";
 
+                if (yearFilter.HasValue)
+                {
+                    url += $"&yearFilter={yearFilter}";
+                }
+
+                var response = await _http.GetAsync(url);
+
+                
                 if (!response.IsSuccessStatusCode)
                 {
                     ViewBag.ErrorMessage = "Unable to fetch cars.";
@@ -76,6 +85,7 @@ namespace RentCar.WebClient.Controllers
                     TotalCars = apiResponse?.TotalCars ?? 0,
                     SortBy = sortBy,
                     SortOrder = sortOrder,
+                    YearFilter = yearFilter
                 };
 
                 return View(viewModel);

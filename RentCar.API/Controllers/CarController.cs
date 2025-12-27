@@ -22,13 +22,14 @@ namespace RentCar.API.Controllers
         public async Task<ActionResult<CarAPIResponse>> GetAvailableCars(
             [FromQuery] DateTime? rentDate,
             [FromQuery] DateTime? returnDate,
+            [FromQuery] int? yearFilter,
             [FromQuery] int page = 1,
             [FromQuery] string sortBy = "Name",
             [FromQuery] string sortOrder = "asc")
         {
             const int pageSize = 3;
 
-            // Return no cars if rent dates
+            // Return no cars if rent dates are invalid
             if (!rentDate.HasValue || !returnDate.HasValue || rentDate >= returnDate)
             {
                 return Ok(new CarAPIResponse
@@ -56,6 +57,12 @@ namespace RentCar.API.Controllers
                             returnDate.Value > r.Rental_date
                         )
                     );
+
+                // Apply year filter if provided
+                if (yearFilter.HasValue)
+                {
+                    query = query.Where(c => c.Year == yearFilter.Value);
+                }
 
                 // Apply sorting
                 query = sortBy switch

@@ -3,17 +3,11 @@
     ViewData["Title"] = "Available Cars";
 }
 
-
-
-
-
 <link rel="stylesheet" href="~/css/cars.css" />
-
 
 <div class="cars-container">
     <h1 class="page-title">Selamat Datang di Rental Mobil Kami</h1>
 
-    
     <div class="controls-bar">
 
         <!-- Date Filter Section -->
@@ -39,6 +33,10 @@
                     <label>Filter Tahun Pembuatan</label>
                     <select type="year" name="yearFilter">
                         <option value="">Semua Tahun</option>
+                        @for (int year = DateTime.Now.Year; year >= 1990; year--)
+                        {
+                            <option value="@year" selected="@(Model.YearFilter == year ? "selected" : null)">@year</option>
+                        }
                     </select>
                 </div>
 
@@ -58,7 +56,8 @@
                            sortOrder = Model.SortOrder, 
                            page = 1,
                            rentDate = Context.Request.Query["rentDate"],
-                           returnDate = Context.Request.Query["returnDate"]
+                           returnDate = Context.Request.Query["returnDate"],
+                           yearFilter = Model.YearFilter
                        })">
                        Name
                     </a>
@@ -67,7 +66,8 @@
                            sortOrder = Model.SortOrder, 
                            page = 1,
                            rentDate = Context.Request.Query["rentDate"],
-                           returnDate = Context.Request.Query["returnDate"]
+                           returnDate = Context.Request.Query["returnDate"],
+                           yearFilter = Model.YearFilter
                        })">
                        Model
                     </a>
@@ -76,7 +76,8 @@
                            sortOrder = Model.SortOrder, 
                            page = 1,
                            rentDate = Context.Request.Query["rentDate"],
-                           returnDate = Context.Request.Query["returnDate"]
+                           returnDate = Context.Request.Query["returnDate"],
+                           yearFilter = Model.YearFilter
                        })">
                        Year
                     </a>
@@ -85,7 +86,8 @@
                            sortOrder = Model.SortOrder, 
                            page = 1,
                            rentDate = Context.Request.Query["rentDate"],
-                           returnDate = Context.Request.Query["returnDate"]
+                           returnDate = Context.Request.Query["returnDate"],
+                           yearFilter = Model.YearFilter
                        })">
                        Price
                     </a>
@@ -97,7 +99,8 @@
                    sortOrder = Model.SortOrder == "asc" ? "desc" : "asc", 
                    page = Model.CurrentPage,
                    rentDate = Context.Request.Query["rentDate"],
-                   returnDate = Context.Request.Query["returnDate"]
+                   returnDate = Context.Request.Query["returnDate"],
+                   yearFilter = Model.YearFilter
                })"
                class="sort-order-button">
                 @if (Model.SortOrder == "asc")
@@ -110,8 +113,6 @@
                 }
             </a>
         </div>
-
-        
 
         <div class="results-info">
             @if (Model.TotalCars > 0)
@@ -177,9 +178,6 @@
         }
     </div>
 
-    
-
-
     @if (Model.TotalCars == 0 && Model.CarValidation == CarValidationStatus.Valid)
     {
         <div class="no-results">
@@ -209,7 +207,8 @@
                sortBy = Model.SortBy, 
                sortOrder = Model.SortOrder,
                rentDate = Context.Request.Query["rentDate"],
-               returnDate = Context.Request.Query["returnDate"]
+               returnDate = Context.Request.Query["returnDate"],
+               yearFilter = Model.YearFilter
            })"
            class="page-link @(!Model.HasPreviousPage ? "disabled" : "")">
             Previous
@@ -222,7 +221,8 @@
                    sortBy = Model.SortBy, 
                    sortOrder = Model.SortOrder,
                    rentDate = Context.Request.Query["rentDate"],
-                   returnDate = Context.Request.Query["returnDate"]
+                   returnDate = Context.Request.Query["returnDate"],
+                   yearFilter = Model.YearFilter
                })"
                class="page-link @(i == Model.CurrentPage ? "active" : "")">
                 @i
@@ -234,7 +234,8 @@
                sortBy = Model.SortBy, 
                sortOrder = Model.SortOrder,
                rentDate = Context.Request.Query["rentDate"],
-               returnDate = Context.Request.Query["returnDate"]
+               returnDate = Context.Request.Query["returnDate"],
+               yearFilter = Model.YearFilter
            })"
            class="page-link @(!Model.HasNextPage ? "disabled" : "")">
             Next
@@ -259,7 +260,5 @@
             }
         }
     }
-
-    
 </script>
 

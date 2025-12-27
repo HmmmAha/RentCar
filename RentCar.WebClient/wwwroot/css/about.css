@@ -109,6 +109,13 @@ body {
     line-height: 1.6;
 }
 
+.feature-item p.contacts {
+    font-size: 1rem;
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .page-title {
