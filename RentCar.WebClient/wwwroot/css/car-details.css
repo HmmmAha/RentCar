@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #f0f4f8;
+    background-color: #f7f2f8;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -163,28 +163,24 @@ body {
 
         .info-table .price-row .value.price {
             font-size: 1.5rem;
-            color: #3498db;
+            color: #b08990;
             font-weight: 700;
         }
 
 .rent-button {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #ff6b9d 0%, #ffc371 100%);
+    background: #ffcad4;
     color: #fff;
     border: none;
     border-radius: 12px;
     font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
 }
 
     .rent-button:hover {
-        background: linear-gradient(135deg, #ff5a8a 0%, #ffb35e 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(255, 107, 157, 0.4);
+        background: #e8b3bd;
     }
 
 /* Responsive Design */

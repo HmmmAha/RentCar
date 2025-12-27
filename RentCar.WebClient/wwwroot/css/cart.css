@@ -181,31 +181,29 @@ body {
 
     .total-price .price {
         font-size: 1.8rem;
-        color: #3498db;
+        color: #b08990;
         font-weight: 700;
     }
 
 .checkout-button {
     padding: 12px;
-    background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%);
+    background: #ffcad4;
     color: #fff;
     border: none;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
     .checkout-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(33, 147, 176, 0.4);
+        background: #e8adb8;
     }
 
 .remove-button {
     padding: 10px;
     background: #fff;
     color: #e74c3c;
-    border: 2px solid #e74c3c;
+    border: 2px solid #ec9389;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
@@ -323,6 +321,22 @@ body {
     .cancel-button:hover {
         background: #7f8c8d;
     }
+
+.back-link {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+    .back-link a {
+        color: #3498db;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }
+
+        .back-link a:hover {
+            color: #2980b9;
+        }
 
 /* Responsive */
 @media (max-width: 768px) {

@@ -7,29 +7,26 @@
 <link rel="stylesheet" href="~/css/history.css">
 
 <div class="history-container">
-    <h1 class="page-title">Riwayat Sewa</h1>
+    <h1 class="page-title">Mobil yang Pernah Disewa</h1>
 
     <!-- Summary Cards -->
     <div class="summary-cards">
         <div class="summary-card">
-            <div class="summary-icon">📋</div>
             <div class="summary-info">
                 <div class="summary-value">@Model.TotalRentals</div>
                 <div class="summary-label">Total Sewa</div>
             </div>
         </div>
         <div class="summary-card paid">
-            <div class="summary-icon">✅</div>
             <div class="summary-info">
                 <div class="summary-value">@Model.PaidRentals</div>
-                <div class="summary-label">Sudah Dibayar</div>
+                <span class="summary-badge paid">Sudah Dibayar</span>
             </div>
         </div>
         <div class="summary-card unpaid">
-            <div class="summary-icon">⏳</div>
             <div class="summary-info">
                 <div class="summary-value">@Model.UnpaidRentals</div>
-                <div class="summary-label">Belum Dibayar</div>
+                <spam class="summary-badge unpaid">Belum Dibayar</spam>
             </div>
         </div>
     </div>
@@ -46,64 +43,44 @@
     }
     else
     {
-        <div class="history-list">
-            @foreach (var rental in Model.Rentals)
-            {
-                <div class="history-item @(rental.Payment_status ? "paid" : "unpaid")">
-                    <div class="item-header">
-                        <div class="item-title">
-                            <h3>@rental.Car_name @rental.Car_year</h3>
-                            <p class="car-model">@rental.Car_model</p>
-                        </div>
-                        <div class="item-status">
-                            @if (rental.Payment_status)
-                            {
-                                <span class="status-badge paid">✓ Sudah Dibayar</span>
-                            }
-                            else
-                            {
-                                <span class="status-badge unpaid">⏳ Belum Dibayar</span>
-                            }
-                        </div>
-                    </div>
-
-                    @{
+        <div class="history-table-wrapper">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Tanggal Sewa</th>
+                        <th>Mobil</th>
+                        <th>Harga Sewa per Hari</th>
+                        <th>Total Hari</th>
+                        <th>Total Harga</th>
+                        <th>Status Pembayaran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var rental in Model.Rentals)
+                    {
                         int rentalDays = (rental.Return_date - rental.Rental_date).Days;
+                        <tr>
+                            <td>
+                                @rental.Rental_date.ToString("dd MMMM yyyy") - @rental.Return_date.ToString("dd MMMM yyyy")
+                            </td>
+                            <td>@rental.Car_name @rental.Car_year</td>
+                            <td>Rp. @rental.Price_per_day.ToString("N0")</td>
+                            <td>@rentalDays</td>
+                            <td>Rp. @rental.Total_price.ToString("N0")</td>
+                            <td>
+                                @if (rental.Payment_status)
+                                {
+                                    <span class="status-badge paid">Sudah Dibayar</span>
+                                }
+                                else
+                                {
+                                    <span class="status-badge unpaid">Belum Dibayar</span>
+                                }
+                            </td>
+                        </tr>
                     }
-
-                    <div class="item-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Tanggal Sewa</span>
-                            <span class="detail-value">@rental.Rental_date.ToString("dd MMM yyyy")</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Tanggal Kembali</span>
-                            <span class="detail-value">@rental.Return_date.ToString("dd MMM yyyy")</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">⏱Durasi</span>
-                            <span class="detail-value">@rentalDays hari</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Harga per Hari</span>
-                            <span class="detail-value">Rp. @rental.Price_per_day.ToString("N0")</span>
-                        </div>
-                    </div>
-
-                    <div class="item-footer">
-                        <div class="total-price">
-                            <span class="label">Total Harga</span>
-                            <span class="price">Rp. @rental.Total_price.ToString("N0")</span>
-                        </div>
-                        @if (!rental.Payment_status)
-                        {
-                            <a href="@Url.Action("Index", "Cart")" class="pay-button">
-                                Bayar Sekarang
-                            </a>
-                        }
-                    </div>
-                </div>
-            }
+                </tbody>
+            </table>
         </div>
     }
 </div>

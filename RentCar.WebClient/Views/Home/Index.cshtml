@@ -11,10 +11,42 @@
 
 
 <div class="cars-container">
-    <h1 class="page-title">Sewa Mobil</h1>
+    <h1 class="page-title">Selamat Datang di Rental Mobil Kami</h1>
 
-    <!-- Sorting Options -->
+    
     <div class="controls-bar">
+
+        <!-- Date Filter Section -->
+        <div class="date-filter-section">
+            <form method="get" id="dateForm" style="display: contents;">
+                <div class="date-group">
+                    <label>Pickup Date:</label>
+                    <input type="date" 
+                           name="rentDate" 
+                           value="@Context.Request.Query["rentDate"]"
+                           required />
+                </div>
+
+                <div class="date-group">
+                    <label>Return Date:</label>
+                    <input type="date" 
+                           name="returnDate" 
+                           value="@Context.Request.Query["returnDate"]"
+                           required />
+                </div>
+
+                <div class="date-group">
+                    <label>Filter Tahun Pembuatan</label>
+                    <select type="year" name="yearFilter">
+                        <option value="">Semua Tahun</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="search-button">Cari</button>
+            </form>
+        </div>
+
+        <!-- Sorting Options -->
         <div class="sorting-controls">
             <div class="sort-dropdown">
                 <button class="sort-button" onclick="toggleDropdown()">
@@ -79,26 +111,7 @@
             </a>
         </div>
 
-        <!-- Rent / Return Date Inputs -->
-        <form method="get" id="dateForm">
-            <label>
-                Rent Date:
-                <input type="date"
-                       name="rentDate"
-                       value="@Context.Request.Query["rentDate"]"
-                       onchange="this.form.submit()"
-                       required />
-            </label>
-
-            <label>
-                Return Date:
-                <input type="date"
-                       name="returnDate"
-                       value="@Context.Request.Query["returnDate"]"
-                       onchange="this.form.submit()"
-                       required />
-            </label>
-        </form>
+        
 
         <div class="results-info">
             @if (Model.TotalCars > 0)
@@ -123,7 +136,7 @@
         }
         else
         {
-            <a href="@Url.Action("Index", "Cart")" class="btn-cart-disabled" disabled>Login untuk mengakses keranjang</a>
+            <a href="@Url.Action("Index", "Cart")" class="btn-cart-logged-out">Login untuk mengakses keranjang</a>
         }
     </div>
 
@@ -152,7 +165,7 @@
                         }
                     </div>
                     <div class="car-info">
-                        <h3 class="car-name">@car.Name @car.Year</h3>
+                        <h3 class="car-name">@car.Name @(@car.Transmission.Equals("automatic", StringComparison.OrdinalIgnoreCase) ? "AT" : "MT") @car.Year</h3>
                         <div class="car-price">
                             <span class="price-label">Harga</span>
                             <span class="price-amount">Rp. @car.Price_per_day.ToString("N0") / hari</span>

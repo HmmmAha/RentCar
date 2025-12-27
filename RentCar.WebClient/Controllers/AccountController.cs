@@ -95,7 +95,13 @@ namespace RentCar.WebClient.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            // safety net just in case
+            // safety nets just in case
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+
             if (User.Identity?.IsAuthenticated == true)
             {
                 return RedirectToAction("Index", "Home");

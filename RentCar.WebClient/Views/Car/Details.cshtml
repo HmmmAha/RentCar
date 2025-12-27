@@ -27,7 +27,7 @@
         <a href="@Url.Action("Index", "Home", new { 
             rentDate = Context.Request.Query["rentDate"],
             returnDate = Context.Request.Query["returnDate"]
-        })">← Back to Cars</a>
+        })">← Kembali</a>
     </div>
 
     <h1 class="page-title">Sewa Mobil</h1>
@@ -101,7 +101,7 @@
                     </tr>
                     <tr class="price-row">
                         <td class="label">Total Harga</td>
-                        <td class="value price">Rp. @(@Model.Price_per_day * rentalDays)</td>
+                        <td class="value price">Rp. @(Int32.Parse(@Model.Price_per_day.ToString("N0")) * rentalDays)</td>
                     </tr>
                 </table>
 
@@ -135,6 +135,6 @@
         images[currentImageIndex].classList.add('active');
     }
 
-    // Optional: Auto-advance carousel every 5 seconds
+    // Auto-advance carousel every 5 seconds
     setInterval(() => changeImage(1), 5000);
 </script>

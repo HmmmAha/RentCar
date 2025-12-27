@@ -15,12 +15,12 @@
 .side-menu {
     position: fixed;
     top: 0;
-    left: -260px; /* hidden */
+    left: -260px;
     width: 260px;
     height: 100%;
-    background: #ffffff;
+    background: #6d597a;
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
-    padding-top: 60px;
+    padding-top: 56px;
     transition: left 0.3s ease;
     z-index: 2000;
 }
@@ -30,13 +30,9 @@
         display: block;
         padding: 14px 20px;
         text-decoration: none;
-        color: #333;
+        color: #f6f2f7;
         font-weight: 500;
     }
-
-        .side-menu a:hover {
-            background-color: #f3f4f6;
-        }
 
     /* Active state */
     .side-menu.show {
@@ -69,13 +65,15 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    border-bottom: 1px solid #e5e7eb;
-    background: #ffffff;
+    border-bottom: 1px solid #6d597a;
+    background: #6d597a;
+    margin-bottom: 30px;
 }
 
 .menu-title {
     font-size: 16px;
     font-weight: 600;
+    color: #f6f2f7;
 }
 
 /* Close Button */
@@ -91,8 +89,4 @@
         color: #ef4444;
     }
 
-/* Push menu items below header */
-.side-menu a {
-    margin-top: 56px;
-}
 

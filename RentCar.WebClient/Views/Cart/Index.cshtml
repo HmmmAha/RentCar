@@ -7,12 +7,18 @@
 <link rel="stylesheet" href="~/css/cart.css">
 
 <div class="cart-container">
+    <div class="back-link">
+        <a href="@Url.Action("Index", "Home", new { 
+            rentDate = Context.Request.Query["rentDate"],
+            returnDate = Context.Request.Query["returnDate"]
+        })">← Kembali</a>
+    </div>
+
     <h1 class="page-title">Keranjang Sewa</h1>
 
     @if (Model.TotalItems == 0)
     {
         <div class="empty-cart">
-            <div class="empty-icon">🛒</div>
             <h2>Keranjang Anda Kosong</h2>
             <p>Belum ada sewa yang belum dibayar</p>
             <a href="@Url.Action("Index", "Home")" class="browse-button">Lihat Mobil</a>
@@ -21,7 +27,7 @@
     else
     {
         <div class="cart-info">
-            <p>📌 Total @Model.TotalItems sewa yang belum dibayar. Anda harus membayar satu per satu.</p>
+            <p>Total @Model.TotalItems sewa yang belum dibayar. Anda harus membayar satu per satu.</p>
         </div>
 
         <div class="cart-items">
@@ -34,23 +40,23 @@
 
                         <div class="rental-info">
                             <div class="info-row">
-                                <span class="label">📅 Tanggal Sewa:</span>
+                                <span class="label">Tanggal Sewa:</span>
                                 <span class="value">@item.Rental_date.ToString("dd MMM yyyy")</span>
                             </div>
                             <div class="info-row">
-                                <span class="label">📅 Tanggal Kembali:</span>
+                                <span class="label">Tanggal Kembali:</span>
                                 <span class="value">@item.Return_date.ToString("dd MMM yyyy")</span>
                             </div>
                             <div class="info-row">
-                                <span class="label">⏱️ Durasi:</span>
+                                <span class="label">Durasi:</span>
                                 <span class="value">@item.Rental_days hari</span>
                             </div>
                             <div class="info-row">
-                                <span class="label">💰 Harga per hari:</span>
+                                <span class="label">Harga per hari:</span>
                                 <span class="value">Rp. @item.Price_per_day.ToString("N0")</span>
                             </div>
                             <div class="info-row status-row">
-                                <span class="label">💳 Status:</span>
+                                <span class="label">Status:</span>
                                 <span class="value status-unpaid">Belum Dibayar</span>
                             </div>
                         </div>

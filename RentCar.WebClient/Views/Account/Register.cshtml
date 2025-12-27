@@ -1,26 +1,47 @@
-﻿@model RentCar.WebClient.Models.Auth.RegisterViewModel;
+﻿@model RentCar.WebClient.Models.Auth.RegisterViewModel
+@{
+    Layout = null;
+}
 <link rel="stylesheet" href="~/css/auth.css" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-<h2>Register</h2>
 
-<form asp-action="Register" method="post">
-    <input asp-for="Name" placeholder="Name" />
-    <span asp-validation-for="Name"></span>
+<div class="auth-box">
+    <h2>Register ke RentCar</h2>
+    <form asp-action="Register" method="post">
+        <label>Nama Lengkap</label>
+        <input asp-for="Name" placeholder="Masukkan nama lengkap Anda" />
+        <span asp-validation-for="Name"></span>
 
-    <input asp-for="Email" placeholder="Email" />
-    <span asp-validation-for="Email"></span>
+        <label>Email</label>
+        <input asp-for="Email" placeholder="Masukkan email Anda" />
+        <span asp-validation-for="Email"></span>
 
-    <input asp-for="Password" type="password" placeholder="Password" />
-    <span asp-validation-for="Password"></span>
+        <label>Password</label>
+        <input asp-for="Password" type="password" placeholder="Masukkan password Anda" />
+        <span asp-validation-for="Password"></span>
 
-    <input asp-for="Address" placeholder="Address" />
-    <span asp-validation-for="Address"></span>
+        <label>Konfirmasi Password</label>
+        <input asp-for="Confirm_password" type="password" placeholder="Konfirmasi password Anda" />
+        <span asp-validation-for="Confirm_password"></span>
 
-    <input asp-for="Phone_number" placeholder="Phone Number" />
-    <span asp-validation-for="Phone_number"></span>
+        <label>Alamat</label>
+        <input asp-for="Address" placeholder="Masukkan alamat Anda" />
+        <span asp-validation-for="Address"></span>
 
-    <input asp-for="Driver_license_number" placeholder="Driver License Number" />
-    <span asp-validation-for="Driver_license_number"></span>
+        <label>Nomor Telepon</label>
+        <input asp-for="Phone_number" placeholder="Masukkan nomor telepon Anda" />
+        <span asp-validation-for="Phone_number"></span>
 
-    <button type="submit">Register</button>
-</form>
+        <label>Nomor SIM</label>
+        <input asp-for="Driver_license_number" placeholder="Masukkan nomor SIM Anda" />
+        <span asp-validation-for="Driver_license_number"></span>
+
+        <button type="submit">Register</button>
+    </form>
+
+    Sudah punya akun? Login
+    <a href="@Url.Action("Login", "Account")">disini.</a>
+</div>

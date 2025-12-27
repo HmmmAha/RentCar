@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using RentCar.WebClient.Models.Cars;
 using System.Net.Http;
 using System.Text.Json;
@@ -16,6 +17,7 @@ namespace RentCar.WebClient.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Details(
             string id,
             DateTime? rentDate,
