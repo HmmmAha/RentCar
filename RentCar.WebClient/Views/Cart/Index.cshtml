@@ -27,7 +27,7 @@
     else
     {
         <div class="cart-info">
-            <p>Total @Model.TotalItems sewa yang belum dibayar. Anda harus membayar satu per satu.</p>
+            <p>Total @Model.TotalItems sewa yang belum dibayar.</p>
         </div>
 
         <div class="cart-items">
@@ -139,13 +139,13 @@
             const result = await response.json();
 
             if (result.success) {
-                alert('✅ ' + result.message);
+                alert(result.message);
                 location.reload();
             } else {
-                alert('❌ ' + result.message);
+                alert(result.message);
             }
         } catch (error) {
-            alert('❌ Error: ' + error.message);
+            alert('Error: ' + error.message);
         }
     }
 
@@ -164,10 +164,10 @@
             if (result.success) {
                 location.reload();
             } else {
-                alert('❌ ' + result.message);
+                alert(result.message);
             }
         } catch (error) {
-            alert('❌ Error: ' + error.message);
+            alert(error.message);
         }
     }
 

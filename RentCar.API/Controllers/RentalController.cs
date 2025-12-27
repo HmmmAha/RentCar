@@ -230,7 +230,7 @@ namespace RentCar.API.Controllers
                     Rental_id = rental.Rental_id,
                     Payment_id = payment.Payment_id,
                     Total_price = rental.Total_price,
-                    Message = "Payment successful! Rental confirmed."
+                    Message = "Payment successful!"
                 });
             }
             catch (Exception ex)

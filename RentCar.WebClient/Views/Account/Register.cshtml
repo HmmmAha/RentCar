@@ -11,6 +11,12 @@
 <div class="auth-box">
     <h2>Register ke RentCar</h2>
     <form asp-action="Register" method="post">
+        @if (ViewBag.Error != null)
+        {
+            <div class="error-message">
+                @ViewBag.Error
+            </div>
+        }
         <label>Nama Lengkap</label>
         <input asp-for="Name" placeholder="Masukkan nama lengkap Anda" />
         <span asp-validation-for="Name"></span>

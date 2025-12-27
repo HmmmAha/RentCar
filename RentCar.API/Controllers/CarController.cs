@@ -114,8 +114,6 @@ namespace RentCar.API.Controllers
                     PageSize = pageSize
                 };
 
-                Console.WriteLine("response: ", response);
-
                 return Ok(response);
             }
             catch (Exception ex)

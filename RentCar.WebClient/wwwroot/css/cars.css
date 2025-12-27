@@ -202,7 +202,7 @@ body {
 }
 
     .details-button:hover {
-        background: linear-gradient(135deg, #ffb347 0%, #ff9f47 100%);
+        background: #ff9f47;
         transform: scale(1.02);
     }
 

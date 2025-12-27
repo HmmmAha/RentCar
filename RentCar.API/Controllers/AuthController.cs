@@ -27,11 +27,11 @@ namespace RentCar.API.Controllers
                 .AnyAsync();
 
             if (emailExists)
-                return BadRequest("Email already registered");
+                return BadRequest("Email sudah terdaftar.");
 
 
             Console.WriteLine(dto);
-            MsCustomer customer = new MsCustomer
+            var customer = new MsCustomer
             {
                 Customer_id = Guid.NewGuid().ToString(),
                 Email = dto.Email,
@@ -57,7 +57,7 @@ namespace RentCar.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            MsCustomer user = await _context.MsCustomers
+            var user = await _context.MsCustomers
                 .Where(c => c.Email == dto.Email)
                 .Select(c => new MsCustomer
                 {

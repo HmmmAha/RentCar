@@ -5,6 +5,8 @@
 
 <link rel="stylesheet" href="~/css/cars.css" />
 
+
+
 <div class="cars-container">
     <h1 class="page-title">Selamat Datang di Rental Mobil Kami</h1>
 
@@ -151,7 +153,9 @@
                 new {
                     id = car.Car_id,
                     rentDate = Context.Request.Query["rentDate"],
-                    returnDate = Context.Request.Query["returnDate"]
+                    returnDate = Context.Request.Query["returnDate"],
+                    yearFilter = Model.YearFilter,
+                    page = Model.CurrentPage
                 })" 
                 class="car-card-link">
                 <div class="car-card">
@@ -166,7 +170,7 @@
                         }
                     </div>
                     <div class="car-info">
-                        <h3 class="car-name">@car.Name @(@car.Transmission.Equals("automatic", StringComparison.OrdinalIgnoreCase) ? "AT" : "MT") @car.Year</h3>
+                        <h3 class="car-name">@car.Name @car.Model @car.Year</h3>
                         <div class="car-price">
                             <span class="price-label">Harga</span>
                             <span class="price-amount">Rp. @car.Price_per_day.ToString("N0") / hari</span>
@@ -195,6 +199,12 @@
     {
         <div class="no-results">
             <p>Apakah Anda merupakan seorang penjelajah waktu?</p>
+        </div>
+    }
+    else if (Model.CarValidation == CarValidationStatus.PastDate)
+    {
+        <div class="no-results">
+            <p>Mobil hanya dapat disewa 1 hari setelah hari ini.</p>
         </div>
     }
 

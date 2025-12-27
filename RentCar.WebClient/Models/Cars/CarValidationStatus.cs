@@ -2,8 +2,9 @@
 {
     public enum CarValidationStatus
     {
-        Valid = 1,
-        MissingDates = -1,
-        InvalidDateRange = -2
+        Valid,
+        MissingDates,
+        InvalidDateRange,
+        PastDate
     }
 }

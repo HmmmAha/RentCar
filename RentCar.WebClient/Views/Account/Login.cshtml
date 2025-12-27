@@ -12,13 +12,19 @@
     <h2>Login ke RentCar</h2>
 
     <form asp-action="Login" method="post">
+        @if (ViewBag.Error != null)
+        {
+            <div class="error-message">
+                @ViewBag.Error
+            </div>
+        }
         <label>Email</label>
         <input asp-for="Email" placeholder="Masukkan email Anda" />
-        <span asp-validation-for="Email"></span>
+        <span asp-validation-for="Email" class="field-validation-error"></span>
 
         <label>Password</label>
         <input asp-for="Password" placeholder="Masukkan password Anda" />
-        <span asp-validation-for="Password"></span>
+        <span asp-validation-for="Password" class="field-validation-error"></span>
 
         <button type="submit">Login</button>
     </form>

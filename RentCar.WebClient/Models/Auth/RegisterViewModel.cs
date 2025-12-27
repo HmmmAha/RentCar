@@ -12,7 +12,7 @@ namespace RentCar.WebClient.Models.Auth
 
         [Required]
         [DataType(DataType.Password)]
-        [MinLength(8, ErrorMessage = "Password minimal 8 karakter")]
+        [MinLength(14, ErrorMessage = "Password minimal 14 karakter")]
         public string Password { get; set; }
 
         [Required]

@@ -21,7 +21,9 @@ namespace RentCar.WebClient.Controllers
         public async Task<IActionResult> Details(
             string id,
             DateTime? rentDate,
-            DateTime? returnDate
+            DateTime? returnDate,
+            int? yearFilter,
+            int page
         )
         {
             try
@@ -40,7 +42,8 @@ namespace RentCar.WebClient.Controllers
 
                     ViewBag.RentDate = rentDate;
                     ViewBag.ReturnDate = returnDate;
-
+                    ViewBag.YearFilter = yearFilter;
+                    ViewBag.Page = page;
                     return View(car);
                 }
                 else

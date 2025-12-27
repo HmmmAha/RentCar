@@ -53,6 +53,19 @@ namespace RentCar.WebClient.Controllers
                     CarValidation = CarValidationStatus.InvalidDateRange
                 });
             }
+
+            if (rentDate < DateTime.Now.Date)
+            {
+                return View(new CarsViewModel
+                {
+                    Cars = new List<CarDto>(),
+                    TotalCars = 0,
+                    CurrentPage = page,
+                    SortBy = sortBy,
+                    SortOrder = sortOrder,
+                    CarValidation = CarValidationStatus.PastDate
+                });
+            }
             const int pageSize = 3;
             try
             {

@@ -61,7 +61,6 @@ namespace RentCar.WebClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddToCartRequest request)
         {
-            Console.WriteLine("hahaha");
             try
             {
                 var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

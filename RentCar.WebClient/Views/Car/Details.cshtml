@@ -26,7 +26,9 @@
     <div class="back-link">
         <a href="@Url.Action("Index", "Home", new { 
             rentDate = Context.Request.Query["rentDate"],
-            returnDate = Context.Request.Query["returnDate"]
+            returnDate = Context.Request.Query["returnDate"],
+            yearFilter = ViewBag.YearFilter,
+            page = ViewBag.Page
         })">← Kembali</a>
     </div>
 
@@ -69,7 +71,7 @@
                 <table class="info-table">
                     <tr>
                         <td class="label">Tipe Mobil</td>
-                        <td class="value">@Model.Model</td>
+                        <td class="value">@Model.Name</td>
                     </tr>
                     <tr>
                         <td class="label">Nama Mobil</td>
@@ -101,7 +103,7 @@
                     </tr>
                     <tr class="price-row">
                         <td class="label">Total Harga</td>
-                        <td class="value price">Rp. @(Int32.Parse(@Model.Price_per_day.ToString("N0")) * rentalDays)</td>
+                        <td class="value price">Rp. @(@Model.Price_per_day * rentalDays)</td>
                     </tr>
                 </table>
 

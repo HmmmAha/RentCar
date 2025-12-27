@@ -56,6 +56,13 @@
     background: #e4cfff;
 }
 
+    .auth-section p {
+        color: #6c587d;
+        padding-left: 1rem;
+        font-weight: bold;
+        font-size: 30px;
+    }
+
 .user-info {
     display: flex;
     align-items: center;
@@ -125,4 +132,13 @@
 
 .input-validation-error {
     border-color: #dc2626;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
 }

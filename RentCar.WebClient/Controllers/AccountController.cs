@@ -40,42 +40,63 @@ namespace RentCar.WebClient.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var response = await _http.PostAsJsonAsync("api/Auth/login", model);
-
-            if (!response.IsSuccessStatusCode)
+            if (!ModelState.IsValid)
             {
-                ViewBag.Error = "Login failed";
-                return View();
+                return View(model);
             }
 
-            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
-
-            var claims = new List<Claim>
+            try
             {
-                new Claim(ClaimTypes.NameIdentifier, loginResponse.Customer_id),
-                new Claim(ClaimTypes.Email, loginResponse.Email),
-                new Claim(ClaimTypes.Name, loginResponse.Name)
-            };
+                var response = await _http.PostAsJsonAsync("api/Auth/login", model);
 
-            var identity = new ClaimsIdentity(
-                claims,
-                CookieAuthenticationDefaults.AuthenticationScheme
-            );
-
-            var principal = new ClaimsPrincipal(identity);
-
-
-            // AUTH PERSISTENCE
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                principal,
-                new AuthenticationProperties
+                if (!response.IsSuccessStatusCode)
                 {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
-                });
+                    if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        ViewBag.Error = "Email atau password salah";
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Login gagal. Silakan coba lagi.";
+                    }
+                    return View(model);
+                }
 
-            return RedirectToAction("Index", "Home");
+                var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, loginResponse.Customer_id),
+                    new Claim(ClaimTypes.Email, loginResponse.Email),
+                    new Claim(ClaimTypes.Name, loginResponse.Name)
+                };
+
+                var identity = new ClaimsIdentity(
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme
+                );
+
+                var principal = new ClaimsPrincipal(identity);
+
+
+                // AUTH PERSISTENCE
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal,
+                    new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
+                    });
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Terjadi kesalahan. Silakan coba lagi.";
+                return View(model);
+            }
+
         }
 
         [HttpGet]
@@ -108,15 +129,36 @@ namespace RentCar.WebClient.Controllers
             }
 
 
-            var response = await _http.PostAsJsonAsync("api/Auth/register", model);
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                ViewBag.Error = "Register failed";
-                return View();
+                var response = await _http.PostAsJsonAsync("api/Auth/register", model);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        ViewBag.Error = errorContent.Replace("\"", ""); // Remove quotes if JSON string
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Registrasi gagal. Silakan coba lagi.";
+                    }
+
+                    return View(model);
+                }
+
+                return RedirectToAction("Login");
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Terjadi kesalahan. Silakan coba lagi.";
+                return View(model);
             }
 
-            return RedirectToAction("Login");
+
         }
 
         [HttpPost]
