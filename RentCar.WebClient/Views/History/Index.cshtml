@@ -35,7 +35,6 @@
     @if (Model.Rentals == null || !Model.Rentals.Any())
     {
         <div class="empty-history">
-            <div class="empty-icon">📭</div>
             <h2>Belum Ada Riwayat</h2>
             <p>Anda belum memiliki riwayat sewa</p>
             <a href="@Url.Action("Index", "Home")" class="browse-button">Lihat Mobil</a>
