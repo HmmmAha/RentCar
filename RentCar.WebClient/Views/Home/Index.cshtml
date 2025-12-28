@@ -207,6 +207,12 @@
             <p>Mobil hanya dapat disewa 1 hari setelah hari ini.</p>
         </div>
     }
+    else if (Model.CarValidation == CarValidationStatus.UnableToFetch)
+    {
+        <div class="no-results">
+            <p>Terjadi sebuah kesalahan. Silakan coba lagi nanti.</p>
+        </div>
+    }
 
     <!-- Pagination -->
     @if (Model.TotalPages > 1)

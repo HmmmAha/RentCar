@@ -10,7 +10,7 @@ namespace RentCar.API.Data
         {
         }
 
-        // DbSets for all entities
+       
         public DbSet<MsCustomer> MsCustomers { get; set; }
         public DbSet<MsCar> MsCars { get; set; }
         public DbSet<MsCarImages> MsCarImages { get; set; }
@@ -98,7 +98,6 @@ namespace RentCar.API.Data
                 .HasPrecision(18, 2);
 
             // ==================== INDEXES ====================
-            // Index on foreign keys for faster queries
             modelBuilder.Entity<TrRental>()
                 .HasIndex(r => r.Customer_id);
 
@@ -117,7 +116,6 @@ namespace RentCar.API.Data
             modelBuilder.Entity<TrMaintenance>()
                 .HasIndex(m => m.Employee_id);
 
-            // Index on frequently queried fields
             modelBuilder.Entity<MsCar>()
                 .HasIndex(c => c.Status);
 
@@ -130,20 +128,6 @@ namespace RentCar.API.Data
 
             modelBuilder.Entity<TrRental>()
                 .HasIndex(r => r.Payment_status);
-
-            // Uncomment to add initial data
-            /*
-            modelBuilder.Entity<MsEmployee>().HasData(
-                new MsEmployee
-                {
-                    Employee_id = Guid.NewGuid().ToString(),
-                    Name = DateTime.Now,
-                    Position = "Manager",
-                    Email = 0,
-                    Phone_number = "123-456-7890"
-                }
-            );
-            */
         }
     }
 }

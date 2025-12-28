@@ -6,10 +6,10 @@ namespace RentCar.WebClient.Models.Auth
     {
         [Required(ErrorMessage = "Email wajib diisi")]
         [EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [Required(ErrorMessage = "Password wajib diisi")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public required string Password { get; set; }
     }
 }

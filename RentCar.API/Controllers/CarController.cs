@@ -17,7 +17,7 @@ namespace RentCar.API.Controllers
             _context = context;
         }
 
-        // GET: api/Cars?rentDate={rentDate}&returnDate={returnDate}&page={page}&sortBy={sortBy}&sortOrder={sortOrder}
+        // GET: api/Cars?rentDate={rentDate}&returnDate={returnDate}&page={page}&sortBy={sortBy}&sortOrder={sortOrder}&yearFilter={yearFilter}
         [HttpGet]
         public async Task<ActionResult<CarAPIResponse>> GetAvailableCars(
             [FromQuery] DateTime? rentDate,
@@ -44,8 +44,6 @@ namespace RentCar.API.Controllers
 
             try
             {
-
-
                 // Get available cars within a range of dates with their images
                 var query = _context.MsCars
                     .Include(c => c.CarImages)
@@ -160,7 +158,7 @@ namespace RentCar.API.Controllers
 
     public class CarAPIResponse
     {
-        public List<CarDto> Cars { get; set; }
+        public required List<CarDto> Cars { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public int TotalCars { get; set; }

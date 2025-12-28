@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RentCar.WebClient.Models;
 using RentCar.WebClient.Models.Cars;
-using System;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -78,11 +77,19 @@ namespace RentCar.WebClient.Controllers
 
                 var response = await _http.GetAsync(url);
 
-                
+
                 if (!response.IsSuccessStatusCode)
                 {
                     ViewBag.ErrorMessage = "Unable to fetch cars.";
-                    return View(new CarsViewModel());
+                    return View(new CarsViewModel
+                    {
+                        Cars = new List<CarDto>(),
+                        TotalCars = 0,
+                        CurrentPage = page,
+                        SortBy = sortBy,
+                        SortOrder = sortOrder,
+                        CarValidation = CarValidationStatus.UnableToFetch
+                    });
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
@@ -106,7 +113,15 @@ namespace RentCar.WebClient.Controllers
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;
-                return View(new CarsViewModel());
+                return View(new CarsViewModel
+                {
+                    Cars = new List<CarDto>(),
+                    TotalCars = 0,
+                    CurrentPage = page,
+                    SortBy = sortBy,
+                    SortOrder = sortOrder,
+                    CarValidation = CarValidationStatus.UnableToFetch
+                });
             }
         }
 

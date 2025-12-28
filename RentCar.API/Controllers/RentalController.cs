@@ -89,7 +89,7 @@ namespace RentCar.API.Controllers
                 // Check if car is already booked for these dates
                 var conflictingBooking = await _context.TrRentals
                     .Where(r => r.Car_id == dto.Car_id &&
-                                r.Payment_status == true && // Only check paid rentals
+                                r.Payment_status == true &&
                                 ((dto.Rental_date >= r.Rental_date && dto.Rental_date < r.Return_date) ||
                                  (dto.Return_date > r.Rental_date && dto.Return_date <= r.Return_date) ||
                                  (dto.Rental_date <= r.Rental_date && dto.Return_date >= r.Return_date)))
@@ -125,7 +125,7 @@ namespace RentCar.API.Controllers
                     Rental_date = dto.Rental_date,
                     Return_date = dto.Return_date,
                     Total_price = totalPrice,
-                    Payment_status = false // NOT PAID YET - in cart
+                    Payment_status = false
                 };
 
                 await _context.TrRentals.AddAsync(rental);

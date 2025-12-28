@@ -2,7 +2,7 @@
 {
     public class CartResponseDto
     {
-        public List<CartItemDto> Items { get; set; }
+        public required List<CartItemDto> Items { get; set; }
         public int TotalItems { get; set; }
     }
 }

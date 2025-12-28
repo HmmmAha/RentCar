@@ -11,12 +11,14 @@ namespace RentCar.API.Models
 
         [ForeignKey("Car")]
         [StringLength(36)]
+        [Required]
         public string Car_id { get; set; }
 
         [StringLength(2000)]
+        [Required]
         public string Image_link { get; set; }
 
-        
+
 
         public virtual MsCar Car { get; set; }
     }

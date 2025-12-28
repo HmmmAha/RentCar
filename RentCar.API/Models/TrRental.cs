@@ -11,19 +11,25 @@ namespace RentCar.API.Models
 
         [ForeignKey("Customer")]
         [StringLength(36)]
+        [Required]
         public string Customer_id { get; set; }
 
         [ForeignKey("Car")]
         [StringLength(36)]
+        [Required]
         public string Car_id { get; set; }
 
+        [Required]
         public DateTime Rental_date { get; set; }
 
+        [Required]
         public DateTime Return_date { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
+        [Required]
         public decimal Total_price { get; set; }
 
+        [Required]
         public bool Payment_status { get; set; }
 
 

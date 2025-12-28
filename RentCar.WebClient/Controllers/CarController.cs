@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentCar.WebClient.Models.Cars;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace RentCar.WebClient.Controllers
@@ -30,10 +29,8 @@ namespace RentCar.WebClient.Controllers
             {
 
                 var response = await _http.GetAsync($"api/Car/{id}");
-                Console.WriteLine("done fetching:", response);
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("success");
                     var content = await response.Content.ReadAsStringAsync();
                     var car = JsonSerializer.Deserialize<CarDto>(content, new JsonSerializerOptions
                     {

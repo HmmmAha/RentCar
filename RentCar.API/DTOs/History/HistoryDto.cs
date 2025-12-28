@@ -2,13 +2,13 @@
 {
     public class RentalHistoryDto
     {
-        public string Rental_id { get; set; }
+        public required string Rental_id { get; set; }
         public DateTime Rental_date { get; set; }
         public DateTime Return_date { get; set; }
 
         // Car details
-        public string Car_name { get; set; }
-        public string Car_model { get; set; }
+        public required string Car_name { get; set; }
+        public required string Car_model { get; set; }
         public int Car_year { get; set; }
 
         // Pricing
@@ -21,7 +21,7 @@
 
     public class RentalHistoryResponseDto
     {
-        public List<RentalHistoryDto> Rentals { get; set; }
+        public required List<RentalHistoryDto> Rentals { get; set; }
         public int TotalRentals { get; set; }
         public int PaidRentals { get; set; }
         public int UnpaidRentals { get; set; }

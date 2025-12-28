@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentCar.WebClient.Models;
-using RentCar.WebClient.Models.Cart;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
-
 using RentCar.WebClient.Models.History;
+using System.Security.Claims;
+using System.Text.Json;
 
 namespace RentCar.WebClient.Controllers
 {

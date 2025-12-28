@@ -5,6 +5,7 @@
         Valid,
         MissingDates,
         InvalidDateRange,
-        PastDate
+        PastDate,
+        UnableToFetch
     }
 }

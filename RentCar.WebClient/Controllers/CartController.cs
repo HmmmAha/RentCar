@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentCar.WebClient.Models;
 using RentCar.WebClient.Models.Cart;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
@@ -31,11 +29,7 @@ namespace RentCar.WebClient.Controllers
                     return RedirectToAction("Login", "Account");
                 }
 
-
-
                 var response = await _http.GetAsync($"api/Rental/cart/{customerId}");
-
-                Console.WriteLine("response: " + response);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -157,6 +151,11 @@ namespace RentCar.WebClient.Controllers
                         PropertyNameCaseInsensitive = true
                     });
 
+                    if (paymentResponse is null)
+                    {
+                        throw new Exception("Invalid payment response");
+                    }
+
                     return Json(new
                     {
                         success = true,
@@ -184,31 +183,31 @@ namespace RentCar.WebClient.Controllers
         // REQUESTS AND RESPONSES
         public class AddToCartRequest
         {
-            public string Car_id { get; set; }
+            public required string Car_id { get; set; }
             public DateTime Rental_date { get; set; }
             public DateTime Return_date { get; set; }
         }
 
         public class PaymentRequest
         {
-            public string Rental_id { get; set; }
-            public string Payment_method { get; set; }
+            public required string Rental_id { get; set; }
+            public required string Payment_method { get; set; }
         }
 
         public class ErrorResponse
         {
-            public string Message { get; set; }
+            public required string Message { get; set; }
         }
 
 
         // DTOs
         public class CheckoutResponseDto
         {
-            public string Rental_id { get; set; }
-            public string Payment_id { get; set; }
-            public decimal Total_price { get; set; }
-            public string Message { get; set; }
+            public required string Rental_id { get; set; }
+            public required string Payment_id { get; set; }
+            public required decimal Total_price { get; set; }
+            public required string Message { get; set; }
         }
-        
+
     }
 }

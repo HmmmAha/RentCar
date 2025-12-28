@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using RentCar.API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentCar.API.Data;
+using RentCar.API.Models;
 
 namespace RentCar.API.Controllers
 {

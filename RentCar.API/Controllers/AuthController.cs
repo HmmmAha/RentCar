@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentCar.API.Data;
-using RentCar.API.Models;
-using RentCar.API.DTOs.Auth;
 using Microsoft.EntityFrameworkCore;
+using RentCar.API.Data;
+using RentCar.API.DTOs.Auth;
+using RentCar.API.Models;
 
 namespace RentCar.API.Controllers
 {
@@ -29,8 +29,6 @@ namespace RentCar.API.Controllers
             if (emailExists)
                 return BadRequest("Email sudah terdaftar.");
 
-
-            Console.WriteLine(dto);
             var customer = new MsCustomer
             {
                 Customer_id = Guid.NewGuid().ToString(),
@@ -88,8 +86,8 @@ namespace RentCar.API.Controllers
 
     public class LoginResponse
     {
-        public string Customer_id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public required string Customer_id { get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
     }
 }

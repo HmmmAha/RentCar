@@ -8,7 +8,7 @@ namespace RentCar.WebClient.Controllers
 {
     public class AccountController : Controller
     {
-        
+
         private readonly HttpClient _http;
 
         public AccountController(IHttpClientFactory factory)
@@ -64,6 +64,12 @@ namespace RentCar.WebClient.Controllers
 
                 var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
 
+                if (loginResponse is null)
+                {
+                    ViewBag.Error = "Login gagal. Silakan coba lagi.";
+                    throw new Exception("Login response was null");
+                }
+
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, loginResponse.Customer_id),
@@ -101,7 +107,7 @@ namespace RentCar.WebClient.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register() 
+        public IActionResult Register()
         {
             // redirects to home if user is logged in
             if (User.Identity?.IsAuthenticated == true)
@@ -109,7 +115,7 @@ namespace RentCar.WebClient.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(); 
+            return View();
         }
 
         [HttpPost]
@@ -169,6 +175,6 @@ namespace RentCar.WebClient.Controllers
             );
             return RedirectToAction("Index", "Home");
         }
-        
+
     }
 }

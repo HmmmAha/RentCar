@@ -10,24 +10,31 @@ namespace RentCar.API.Models
         public string Car_id { get; set; }
 
         [StringLength(200)]
+        [Required]
         public string Name { get; set; }
 
         [StringLength(100)]
+        [Required]
         public string Model { get; set; }
 
+        [Required]
         public int Year { get; set; }
 
         [StringLength(50)]
+        [Required]
         public string License_plate { get; set; }
 
         public int Number_of_car_seats { get; set; }
 
         [StringLength(100)]
+        [Required]
         public string Transmission { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
+        [Required]
         public decimal Price_per_day { get; set; }
 
+        [Required]
         public bool Status { get; set; }
 
         // Navigation properties

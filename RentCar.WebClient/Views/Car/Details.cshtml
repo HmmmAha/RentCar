@@ -4,13 +4,23 @@
 }
 
 @{
-    DateTime? rentDate = string.IsNullOrEmpty(Context.Request.Query["rentDate"])
-        ? null
-        : DateTime.Parse(Context.Request.Query["rentDate"]);
+    DateTime? rentDate = null;
 
-    DateTime? returnDate = string.IsNullOrEmpty(Context.Request.Query["returnDate"])
-        ? null
-        : DateTime.Parse(Context.Request.Query["returnDate"]);
+    var rentDateStr = Context.Request.Query["rentDate"].ToString();
+
+    if (DateTime.TryParse(rentDateStr, out var rentDateParsed))
+    {
+        rentDate = rentDateParsed;
+    }
+
+    DateTime? returnDate = null;
+
+    var returnDateStr = Context.Request.Query["rentDate"].ToString();
+
+    if (DateTime.TryParse(rentDateStr, out var returnDateParsed))
+    {
+        returnDate = returnDateParsed;
+    }
 
     int rentalDays = 0;
 

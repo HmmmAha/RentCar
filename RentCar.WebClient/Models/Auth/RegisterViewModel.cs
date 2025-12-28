@@ -5,29 +5,29 @@ namespace RentCar.WebClient.Models.Auth
     public class RegisterViewModel
     {
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required, EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [MinLength(14, ErrorMessage = "Password minimal 14 karakter")]
-        public string Password { get; set; }
+        public required string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password dan konfirmasi password tidak sama")]
-        public string Confirm_password { get; set; }
+        public required string Confirm_password { get; set; }
 
         [Required]
-        public string Address { get; set; }
+        public required string Address { get; set; }
 
         [Required]
         [RegularExpression(@"^\d+$", ErrorMessage = "Nomor telepon hanya boleh angka")]
-        public string Phone_number { get; set; }
+        public required string Phone_number { get; set; }
 
         [Required]
-        public string Driver_license_number { get; set; }
+        public required string Driver_license_number { get; set; }
     }
 }
