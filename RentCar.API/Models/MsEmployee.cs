@@ -10,17 +10,18 @@ namespace RentCar.API.Models
         public string Employee_id { get; set; }
 
         [Required]
-        public DateTime Name { get; set; }
+        [StringLength(200)]
+        public string Name { get; set; }
 
         [StringLength(4000)]
         [Required]
         public string Position { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [StringLength(100)]
         [Required]
-        public decimal Email { get; set; }
+        public string Email { get; set; }
 
-        [StringLength(36)]
+        [StringLength(50)]
         [Required]
         public string Phone_number { get; set; }
 
